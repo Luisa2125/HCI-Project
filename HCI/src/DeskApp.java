@@ -234,8 +234,25 @@ public class DeskApp {
 		sesion.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
-				actual.setVisible(false);
-				inicio.setVisible(true); 
+				if(registro.isVisible()){
+					registro.setVisible(false);
+					inicio.setVisible(true); 
+				}if(home.isVisible()){
+					home.setVisible(false);
+					inicio.setVisible(true); 
+				}if(clases.isVisible()){
+					clases.setVisible(false);
+					inicio.setVisible(true); 
+				}if(ver1.isVisible()){
+					ver1.setVisible(false);
+					inicio.setVisible(true); 
+				}if(qr.isVisible()){
+					qr.setVisible(false);
+					inicio.setVisible(true); 
+				}if(inicio.isVisible()){
+					inicio.setVisible(true);
+				}
+				 
 			
 			}	
 		});
@@ -661,9 +678,15 @@ public class DeskApp {
 				users.add(nuevo);
 				System.out.println(users);
 				//ProbandoAction button
-				reg.setVisible(false);
-				inicio.setVisible(true);
-				JOptionPane.showMessageDialog(null, "SUCCES", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
+				if(nuevo.verde){
+					reg.setVisible(false);
+					inicio.setVisible(true);
+					JOptionPane.showMessageDialog(null, "SUCCES", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
+					users.add(nuevo);
+				}else{
+					reg.setVisible(true);
+					
+				}
 			}	
 		});
 		

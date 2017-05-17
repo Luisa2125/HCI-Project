@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 
 public class Usuario {
 	String email;
@@ -7,6 +9,8 @@ public class Usuario {
 	String pasword;
 	boolean karate;
 	boolean danza;
+	
+	boolean verde = false;
 	
 	public void setEmail(String emailU){
 		this.email = emailU;
@@ -23,9 +27,11 @@ public class Usuario {
 	public void setPasword(String paswordU,String pasword2){
 		if(paswordU.equals(pasword2)){
 			this.pasword=paswordU;
+			verde = true;
 		}
 		else{
-			int n = 0;
+			verde = false;
+			JOptionPane.showMessageDialog(null, "Contraseña}n Incorrecta", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	public void setKarate(boolean karateU){
