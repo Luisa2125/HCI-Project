@@ -1,0 +1,67 @@
+
+public class Usuario {
+	String email;
+	String user;
+	String name;
+	int age;
+	String pasword;
+	boolean karate;
+	boolean danza;
+	
+	public void setEmail(String emailU){
+		this.email = emailU;
+	}
+	public void setUser(String userU){
+		this.user =userU;
+	}
+	public void setName(String nameU){
+		this.name = nameU;
+	}
+	public void setAge(int ageU){
+		this.age = ageU;
+	}
+	public void setPasword(String paswordU,String pasword2){
+		if(paswordU.equals(pasword2)){
+			this.pasword=paswordU;
+		}
+		else{
+			int n = 0;
+		}
+	}
+	public void setKarate(boolean karateU){
+		this.karate = karateU;
+	}
+	public void setDanza(boolean danzaU){
+		this.danza = danzaU;	
+	}
+
+	public String getEmail() {
+		return email;
+	}
+	public String getUser() {
+		return user;
+	}
+	public String getPasword() {
+		return pasword;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public boolean isKarate() {
+		return karate;
+	}
+	public boolean isDanza() {
+		return danza;
+	}
+	@Override
+	public String toString() {
+		return "Usuario [email=" + email + ", user=" + user + ", name=" + name
+				+ ", age=" + age + ", pasword=" + pasword + ", karate="
+				+ karate + ", danza=" + danza + "]";
+	}
+	
+}
