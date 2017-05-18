@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -87,16 +88,18 @@ public class DeskApp {
 
 	/**
 	 * Create the application.
+	 * @throws IOException 
 	 */
-	public DeskApp() {
+	public DeskApp() throws IOException {
 		initialize();
 	}
 	
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws IOException 
 	 */
-	private void initialize() {
+	private void initialize() throws IOException {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.getContentPane().setLayout(null);
@@ -121,7 +124,7 @@ public class DeskApp {
 		
 		ver1 = Olvide();
 		registro = registro();
-		qr = codigoQRVideo();
+		qr = menuVivo();
 		
 		
 		
@@ -777,12 +780,39 @@ public class DeskApp {
 		
 		return mqr;
 	}
-	public JPanel menuVivo(){
+	public JPanel menuVivo() throws IOException{
 		JPanel men = new JPanel();
 		men.setBounds(100, 400, 1141, 1100);
 		men.setBackground(Color.BLACK);
 		men.setLayout(null);
 		
+		JButton ver = new JButton("VER EN VIVO");
+		ver.setBounds(350, 300, 400, 60);
+		ver.setBackground(Color.BLACK);
+		ver.setForeground(b);
+		ver.setBorder(BorderFactory.createLineBorder(b));
+		
+		
+		JButton grabar = new JButton("GRABAR EN VIVO");
+		grabar.setBounds(350, 500, 400, 60);
+		grabar.setBackground(Color.BLACK);
+		grabar.setForeground(b);
+		grabar.setBorder(BorderFactory.createLineBorder(b));
+		grabar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				try{
+					Process proc = Runtime.getRuntime().exec("obs");
+				}catch(IOException r){
+					System.out.println("NOOOOOOO");
+				}
+			}
+		});
+		
+		
+	
+		men.add(ver);
+		men.add(grabar);
 		
 		
 		
