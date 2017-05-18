@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -34,6 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JRadioButton;
+import javax.swing.border.Border;
 
 import com.barcodelib.barcode.QRCode;
 
@@ -64,6 +66,7 @@ public class DeskApp {
 	private JPanel qr;
 	private ArrayList<Usuario> users= new ArrayList<Usuario>();
 	private JMenuBar iconos;
+	Color b = new Color(10,250,255);
 	
 
 	/**
@@ -95,7 +98,7 @@ public class DeskApp {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.GRAY);
+		frame.getContentPane().setBackground(Color.BLACK);
 		frame.getContentPane().setLayout(null);
 		menu();
 		inicio = singIn();
@@ -105,7 +108,7 @@ public class DeskApp {
 		
 		clases = new JPanel();
 		clases.setBounds(100, 400, 1141, 1100);
-		clases.setBackground(Color.GRAY);
+		clases.setBackground(Color.BLACK);
 		clases.setLayout(null);
 		
 		
@@ -119,13 +122,14 @@ public class DeskApp {
 		ver1 = Olvide();
 		registro = registro();
 		qr = codigoQRVideo();
-		qr.setVisible(false);
+		
 		
 		
 		home.setVisible(false);
 		clases.setVisible(false);
 		ver1.setVisible(false);
 		registro.setVisible(false);
+		qr.setVisible(false);
 		
 		
 		frame.getContentPane().add(inicio);	
@@ -133,6 +137,7 @@ public class DeskApp {
 		frame.getContentPane().add(clases);
 		frame.getContentPane().add(ver1);
 		frame.getContentPane().add(registro);
+		frame.getContentPane().add(qr);
 		
 		frame.getContentPane().add(iconos);
 		label = new JLabel("");
@@ -144,14 +149,15 @@ public class DeskApp {
 	}
 	public void menu(){
 		iconos = new JMenuBar();
-		iconos.setBounds(0, 0, 300, 30);
-		iconos.setBackground(Color.GRAY);
+		iconos.setBounds(0, 0, 1300, 40);
+		iconos.setBackground(Color.BLACK);
 		
 		
 		
-		JMenuItem back = new JMenuItem("Atras",KeyEvent.VK_A);
+		JMenuItem back = new JMenuItem("                         Atras",KeyEvent.VK_A);
 		//back.setIcon(new ImageIcon("/home/luisa/Desktop/atras.png"));
-		back.setBackground(Color.GRAY);
+		back.setFont(new Font("Dialog", Font.PLAIN, 22));
+		back.setBackground(Color.BLACK);
 		back.setForeground(Color.WHITE);
 		
 		
@@ -186,9 +192,10 @@ public class DeskApp {
 			
 			}	
 		});
-		JMenuItem home = new JMenuItem("Menu",KeyEvent.VK_A);
+		JMenuItem home = new JMenuItem("                         Menu",KeyEvent.VK_A);
 		//home.setIcon(new ImageIcon("/home/luisa/Desktop/home.png"));
-		home.setBackground(Color.GRAY);
+		home.setFont(new Font("Dialog", Font.PLAIN, 22));
+		home.setBackground(Color.BLACK);
 		home.setForeground(Color.WHITE);
 		
 		home.addActionListener(new ActionListener(){
@@ -217,20 +224,23 @@ public class DeskApp {
 			
 			}	
 		});
-		JMenuItem el = new JMenuItem("Eliminar",KeyEvent.VK_A);
+		JMenuItem el = new JMenuItem("                         Eliminar",KeyEvent.VK_A);
 		el.setForeground(Color.WHITE);
 		//el.setIcon(new ImageIcon("/home/luisa/Desktop/eliminate.png"));
-		el.setBackground(Color.GRAY);
+		el.setBackground(Color.BLACK);
+		el.setFont(new Font("Dialog", Font.PLAIN, 22));
 		
 		JMenu setting = new JMenu("Herramientas");
 		setting.setForeground(Color.WHITE);
 		//setting.setIcon(new ImageIcon("/home/luisa/Desktop/sett.png"));
-		setting.setBackground(Color.GRAY);
+		setting.setBackground(Color.BLACK);
+		setting.setFont(new Font("Dialog", Font.PLAIN, 22));
 		
 		JMenuItem sesion = new JMenuItem("Cerrar Cuenta",KeyEvent.VK_A);
 		//el.setIcon(new ImageIcon("/home/luisa/Desktop/eliminate.png"));
-		sesion.setBackground(Color.GRAY);
+		sesion.setBackground(Color.BLACK);
 		sesion.setForeground(Color.WHITE);
+		sesion.setFont(new Font("Dialog", Font.PLAIN, 22));
 		sesion.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
@@ -258,8 +268,9 @@ public class DeskApp {
 		});
 		JMenuItem salir = new JMenuItem("Salir",KeyEvent.VK_A);
 		//el.setIcon(new ImageIcon("/home/luisa/Desktop/eliminate.png"));
-		salir.setBackground(Color.GRAY);
+		salir.setBackground(Color.BLACK);
 		salir.setForeground(Color.WHITE);
+		salir.setFont(new Font("Dialog", Font.PLAIN, 22));
 		salir.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.exit(0);
@@ -268,8 +279,9 @@ public class DeskApp {
 		});
 		JMenuItem ayuda = new JMenuItem("Ayuda",KeyEvent.VK_A);
 		//el.setIcon(new ImageIcon("/home/luisa/Desktop/eliminate.png"));
-		ayuda.setBackground(Color.GRAY);
+		ayuda.setBackground(Color.BLACK);
 		ayuda.setForeground(Color.WHITE);
+		ayuda.setFont(new Font("Dialog", Font.PLAIN, 22));
 		ayuda.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.exit(0);
@@ -289,15 +301,17 @@ public class DeskApp {
 	}
 	public JPanel home(){
 		JPanel home = new JPanel();
-		home.setBounds(104, 402, 1141, 1100);
-		home.setBackground(Color.GRAY);
+		home.setBounds(150, 502, 1000, 1000);
+		home.setBackground(Color.BLACK);
 		home.setLayout(null);
+		home.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		
 		mclases = new JButton("MIS CLASES");
 		mclases.setFont(new Font("Dialog", Font.BOLD, 29));
-		mclases.setForeground(Color.WHITE);
-		mclases.setBackground(Color.DARK_GRAY);
-		mclases.setBounds(400, 280, 300, 70);
+		mclases.setForeground(b);
+		mclases.setBackground(Color.BLACK);
+		mclases.setBounds(350, 230, 300, 70);
+		//mclases.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		mclases.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
@@ -309,16 +323,18 @@ public class DeskApp {
 		
 		importar = new JButton("IMPORTAR");
 		importar.setFont(new Font("Dialog", Font.BOLD, 29));
-		importar.setForeground(Color.WHITE);
-		importar.setBackground(Color.DARK_GRAY);
-		importar.setBounds(440, 480, 210, 70);
+		importar.setForeground(Color.GREEN);
+		importar.setBackground(Color.BLACK);
+		importar.setBounds(390, 430, 210, 70);
+		//importar.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		home.add(importar);
 		
 		vivo = new JButton("EN VIVO");
 		vivo.setFont(new Font("Dialog", Font.BOLD, 29));
-		vivo.setForeground(Color.WHITE);
-		vivo.setBackground(Color.DARK_GRAY);
-		vivo.setBounds(440, 680, 210, 70);
+		vivo.setForeground(b);
+		vivo.setBackground(Color.BLACK);
+		//vivo.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		vivo.setBounds(390, 630, 210, 70);
 		vivo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
@@ -343,7 +359,7 @@ public class DeskApp {
 	public JPanel singIn(){
 		JPanel inicio = new JPanel();
 		inicio.setBounds(100, 400, 1141, 1100);
-		inicio.setBackground(Color.GRAY);
+		inicio.setBackground(Color.BLACK);
 		inicio.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("USUARIO: ");
@@ -375,7 +391,7 @@ public class DeskApp {
 		JButton lblNewLabel2 = new JButton("Olvidé mi Contraseña");
 		lblNewLabel2.setFont(new Font("FreeSerif", Font.BOLD, 25));
 		lblNewLabel2.setForeground(Color.WHITE);
-		lblNewLabel2.setBackground(Color.GRAY);
+		lblNewLabel2.setBackground(Color.BLACK);
 		lblNewLabel2.setBounds(700, 399, 300, 45);
 		lblNewLabel2.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -390,15 +406,17 @@ public class DeskApp {
 		btnIngresar = new JButton("INGRESAR");
 		btnIngresar.setFont(new Font("Dialog", Font.BOLD, 25));
 		btnIngresar.setForeground(Color.WHITE);
-		btnIngresar.setBackground(Color.DARK_GRAY);
+		btnIngresar.setBackground(Color.BLACK);
 		btnIngresar.setBounds(168, 680, 200, 50);
+		
+		btnIngresar.setBorder(BorderFactory.createLineBorder(b));
 		btnIngresar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
-				if(ver(textField_2.getText(),textField_3.getText())){
+				//if(ver(textField_2.getText(),textField_3.getText())){
 					inicio.setVisible(false);
 					home.setVisible(true);
-				}
+				//}
 			}	
 		});
 		inicio.add(btnIngresar);
@@ -406,7 +424,8 @@ public class DeskApp {
 		btnRegistrar = new JButton("REGISTRAR");
 		btnRegistrar.setFont(new Font("Dialog", Font.BOLD, 25));
 		btnRegistrar.setForeground(Color.WHITE);
-		btnRegistrar.setBackground(Color.DARK_GRAY);
+		btnRegistrar.setBackground(Color.BLACK);
+		btnRegistrar.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		btnRegistrar.setBounds(748, 680, 300, 50);
 		btnRegistrar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -443,18 +462,8 @@ public class DeskApp {
 		JPanel golpes = new JPanel();
 		JPanel catas = new JPanel();
 		
-		atras = new JButton("");
-		atras.setIcon(new ImageIcon("/home/luisa/Desktop/atras.png"));
-		atras.setBounds(900, 1000,900, 88);
-		atras.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//ProbandoAction button
-				misC.setVisible(false);
-				home.setVisible(true);
-			}		
-		});
 		
-		misC.add(atras);
+	
 		
 		if(karate == true && dance == false){
 			misC.addTab("Patadas", patadas);
@@ -481,7 +490,7 @@ public class DeskApp {
 	public JPanel Olvide(){
 		JPanel ver = new JPanel();
 		ver.setBounds(100, 400, 1141, 1100);
-		ver.setBackground(Color.GRAY);
+		ver.setBackground(Color.BLACK);
 		ver.setLayout(null);
 		
 		JLabel correo = new JLabel("INGRESE CORREO: ");
@@ -510,7 +519,7 @@ public class DeskApp {
 		JButton veri = new JButton("VERIFICAR");
 		veri.setFont(new Font("Dialog", Font.BOLD, 30));
 		veri.setForeground(Color.WHITE);
-		veri.setBackground(Color.DARK_GRAY);
+		veri.setBackground(Color.BLACK);
 		veri.setBounds(668, 680, 250, 100);
 		veri.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -546,7 +555,7 @@ public class DeskApp {
 	public JPanel registro(){
 		JPanel reg = new JPanel();
 		reg.setBounds(104, 402, 1141, 1100);
-		reg.setBackground(Color.GRAY);
+		reg.setBackground(Color.BLACK);
 		reg.setLayout(null);
 		
 		JLabel correo = new JLabel("CORREO: ");
@@ -619,19 +628,21 @@ public class DeskApp {
 		reg.add(textpaswVer);
 		
 		JLabel gen = new JLabel("Genero: ");
-		gen.setFont(new Font("FreeSerif", Font.PLAIN, 25));
+		gen.setFont(new Font("FreeSerif", Font.PLAIN, 27));
 		gen.setForeground(Color.WHITE);
 		gen.setBounds(760, 362, 384, 51);
 		reg.add(gen);
 		JRadioButton fem = new JRadioButton("Femenino");
 		fem.setBounds(760, 402, 149, 23);
-		fem.setBackground(Color.DARK_GRAY);
-		fem.setForeground(Color.WHITE);
+		fem.setFont(new Font("Dialog", Font.PLAIN,22));
+		fem.setBackground(Color.BLACK);
+		fem.setForeground(Color.GREEN);
 		reg.add(fem);
 		JRadioButton mas = new JRadioButton("Masculino");
 		mas.setBounds(760, 442, 149, 23);
-		mas.setBackground(Color.DARK_GRAY);
-		mas.setForeground(Color.WHITE);
+		mas.setFont(new Font("Dialog", Font.PLAIN,22));
+		mas.setBackground(Color.BLACK);
+		mas.setForeground(Color.GREEN);
 		reg.add(mas);
 		if (mas.isSelected()){
 			fem.setSelected(false);
@@ -643,13 +654,15 @@ public class DeskApp {
 		
 		karateI = new JRadioButton("Karate");
 		karateI.setBounds(760, 662, 149, 23);
-		karateI.setBackground(Color.DARK_GRAY);
-		karateI.setForeground(Color.WHITE);
+		karateI.setFont(new Font("Dialog", Font.PLAIN,22));
+		karateI.setBackground(Color.BLACK);
+		karateI.setForeground(b);
 		reg.add(karateI);
 		ballet = new JRadioButton("danza");
 		ballet.setBounds(760, 702, 149, 23);
-		ballet.setBackground(Color.DARK_GRAY);
-		ballet.setForeground(Color.WHITE);
+		ballet.setFont(new Font("Dialog", Font.PLAIN,22));
+		ballet.setBackground(Color.BLACK);
+		ballet.setForeground(b);
 		reg.add(ballet);
 		
 		if (karateI.isSelected()){
@@ -662,8 +675,9 @@ public class DeskApp {
 		JButton veri = new JButton("REGISTRAR");
 		veri.setFont(new Font("Dialog", Font.BOLD, 30));
 		veri.setForeground(Color.WHITE);
-		veri.setBackground(Color.DARK_GRAY);
+		veri.setBackground(Color.BLACK);
 		veri.setBounds(100, 880, 250, 100);
+		veri.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		veri.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				Usuario nuevo = new Usuario();
@@ -690,46 +704,39 @@ public class DeskApp {
 			}	
 		});
 		
-		atras = new JButton("");
-		atras.setIcon(new ImageIcon("/home/luisa/Desktop/atras.png"));
-		atras.setBounds(900, 1000,90, 88);
-		atras.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//ProbandoAction button
-				registro.setVisible(false);
-				inicio.setVisible(true);
-			}		
-		});
-		reg.add(atras);
+		
 		reg.add(veri);
 		
 		return reg;
 	}
 	public JPanel codigoQRVideo(){
-		JPanel qr = new JPanel();
-		qr.setBounds(104, 402, 1141, 1100);
-		qr.setBackground(Color.GRAY);
-		qr.setLayout(null);
+		JPanel mqr = new JPanel();
+		mqr.setBounds(100, 400, 1141, 1100);
+		mqr.setBackground(Color.BLACK);
+		mqr.setLayout(null);
+		
+		
+		JLabel correo = new JLabel("Escanee el siguiente codigo QR: ");
+		correo.setFont(new Font("FreeSerif", Font.BOLD, 31));
+		correo.setForeground(Color.WHITE);
+		correo.setBounds(100, 248, 584, 51);
 		
 		int udm = 0;
-		int resol = 72;
-		float mi = 0.000f;
-		float md = 0.000f;
-		float ms = 0.000f;
-		float min = 0.000f;
+		int resol = 78;
+		float mi = 1.000f;
+		float md = 1.000f;
+		float ms = 1.000f;
+		float min = 1.000f;
 		int rot = 0;
-		float tam = 5.000f;
+		float tam = 12.000f;
 		
 		
-		JLabel jtxtcodigo = new JLabel("escanea el codigo QR para acceder al video \npor medio de los lentes de realidad aumentada");
-		jtxtcodigo.setFont(new Font("Dialog", Font.BOLD, 30));
-		jtxtcodigo.setForeground(Color.WHITE);
-		jtxtcodigo.setBackground(Color.GRAY);
-		jtxtcodigo.setBounds(10, 200, 350, 100);
+		
+		
 		
 		String link = "soyluna.net/capitulo-13-segunda-temporada/";
 		
-		qr.add(jtxtcodigo);
+		mqr.add(correo);
 		
 		try{
 			QRCode cod = new QRCode();
@@ -745,29 +752,40 @@ public class DeskApp {
 			cod.setRotate(rot);
 			cod.setModuleSize(tam);
 			
-			String archiv = System.getProperty("user.home")+"/codidodemo.gif";
+			String archiv = System.getProperty("user.home")+"/codidodemo.png";
 			cod.renderBarcode(archiv);
 			
 			
-			//Desktop d = Desktop.getDesktop();
-			//d.open(new File(archiv));
 			
-			JLabel qrC= new JLabel("");
-			System.out.println(archiv);
-			qrC.setIcon(new ImageIcon(archiv));
-			qrC.setBounds(10, 400,400,400);
-			
-			
-			qr.add(qrC);
 			
 			
 		}catch(Exception e){
 			System.out.println("NO FUNCIONA BRUTA");
 			
 		}
+		String archiv = System.getProperty("user.home")+"/codidodemo.png";
+		
+		JLabel qrC= new JLabel("");
+		System.out.println(archiv);
+		qrC.setIcon(new ImageIcon(archiv));
+		qrC.setBounds(300, 360,600,600);
+		
+		
+		mqr.add(qrC);
 		
 		
 		
-		return qr;
+		return mqr;
+	}
+	public JPanel menuVivo(){
+		JPanel men = new JPanel();
+		men.setBounds(100, 400, 1141, 1100);
+		men.setBackground(Color.BLACK);
+		men.setLayout(null);
+		
+		
+		
+		
+		return men;
 	}
 }
