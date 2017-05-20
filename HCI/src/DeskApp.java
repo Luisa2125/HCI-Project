@@ -1,9 +1,18 @@
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 
+import javax.imageio.ImageIO;
+import javax.media.CaptureDeviceInfo;
+import javax.media.CaptureDeviceManager;
+import javax.media.Manager;
+import javax.media.MediaLocator;
+import javax.media.Player;
 import javax.swing.JFrame;
 
 import java.awt.Color;
@@ -15,10 +24,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -38,11 +50,24 @@ import javax.swing.JMenuBar;
 import javax.swing.JRadioButton;
 import javax.swing.border.Border;
 
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.MatOfRect;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.highgui.Highgui;
+import org.opencv.highgui.VideoCapture;
+import org.opencv.objdetect.CascadeClassifier;
+
 import com.barcodelib.barcode.QRCode;
 
 
 public class DeskApp {
-
+	
+	
+	
+	
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -64,10 +89,14 @@ public class DeskApp {
 	private boolean dance = false;
 	private JRadioButton karateI;
 	private JRadioButton ballet;
-	private JPanel qr;
+	private JPanel Nm;
+	private JPanel menuAct;
+	private JPanel menuVer;
 	private ArrayList<Usuario> users= new ArrayList<Usuario>();
 	private JMenuBar iconos;
 	Color b = new Color(10,250,255);
+	
+
 	
 
 	/**
@@ -110,21 +139,22 @@ public class DeskApp {
 		home = home();
 		
 		clases = new JPanel();
-		clases.setBounds(100, 400, 1141, 1100);
+		clases.setBounds(0, 500, 1500, 1600);
+		clases.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		clases.setBackground(Color.BLACK);
 		clases.setLayout(null);
+		clases.add(categoria());
 		
 		
 		
-		JTabbedPane misC = new JTabbedPane();
-		misC = clasesP(clases);
-		misC.setBackground(Color.WHITE);
-		misC.setBounds(10, 10, 1100, 850);
-		clases.add(misC);
+		
 		
 		ver1 = Olvide();
 		registro = registro();
-		qr = menuVivo();
+		Nm = menuVivo();
+		menuAct = menuA();
+		menuVer = codigoQRVideo();
+		
 		
 		
 		
@@ -132,7 +162,9 @@ public class DeskApp {
 		clases.setVisible(false);
 		ver1.setVisible(false);
 		registro.setVisible(false);
-		qr.setVisible(false);
+		Nm.setVisible(false);
+		menuAct.setVisible(false);
+		menuVer.setVisible(false);
 		
 		
 		frame.getContentPane().add(inicio);	
@@ -140,7 +172,9 @@ public class DeskApp {
 		frame.getContentPane().add(clases);
 		frame.getContentPane().add(ver1);
 		frame.getContentPane().add(registro);
-		frame.getContentPane().add(qr);
+		frame.getContentPane().add(Nm);
+		frame.getContentPane().add(menuAct);
+		frame.getContentPane().add(menuVer);
 		
 		frame.getContentPane().add(iconos);
 		label = new JLabel("");
@@ -180,8 +214,8 @@ public class DeskApp {
 				}if(ver1.isVisible()){
 					ver1.setVisible(false);
 					inicio.setVisible(true);
-				}if(qr.isVisible()){
-					qr.setVisible(false);
+				}if(Nm.isVisible()){
+					Nm.setVisible(false);
 					home.setVisible(true);
 				}if(inicio.isVisible()){
 					inicio.setVisible(true);
@@ -216,11 +250,11 @@ public class DeskApp {
 				}if(ver1.isVisible()){
 					ver1.setVisible(false);
 					home.setVisible(true); 
-				}if(qr.isVisible()){
-					qr.setVisible(false);
+				}if(Nm.isVisible()){
+					Nm.setVisible(false);
+					menuAct.setVisible(false);
+					menuVer.setVisible(false);
 					home.setVisible(true); 
-				}if(inicio.isVisible()){
-					inicio.setVisible(true);
 				}
 				
 				
@@ -259,8 +293,10 @@ public class DeskApp {
 				}if(ver1.isVisible()){
 					ver1.setVisible(false);
 					inicio.setVisible(true); 
-				}if(qr.isVisible()){
-					qr.setVisible(false);
+				}if(Nm.isVisible()){
+					Nm.setVisible(false);
+					menuAct.setVisible(false);
+					menuVer.setVisible(false);
 					inicio.setVisible(true); 
 				}if(inicio.isVisible()){
 					inicio.setVisible(true);
@@ -342,7 +378,7 @@ public class DeskApp {
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
 				home.setVisible(false);
-				qr.setVisible(true);
+				Nm.setVisible(true);
 			}	
 		});
 		home.add(vivo);
@@ -419,6 +455,8 @@ public class DeskApp {
 				//if(ver(textField_2.getText(),textField_3.getText())){
 					inicio.setVisible(false);
 					home.setVisible(true);
+					textField_2.setText(null);
+					textField_3.setText(null);
 				//}
 			}	
 		});
@@ -455,39 +493,17 @@ public class DeskApp {
 		return res;
 		
 	}
-	public JTabbedPane clasesP(JPanel clases){
-		JTabbedPane misC = new JTabbedPane();
-		JPanel jazz = new JPanel();
-		JPanel ballet = new JPanel();
-		JPanel hip = new JPanel();
-		
-		JPanel patadas = new JPanel();
-		JPanel golpes = new JPanel();
-		JPanel catas = new JPanel();
-		
-		
-	
-		
-		if(karate == true && dance == false){
-			misC.addTab("Patadas", patadas);
-			misC.addTab("GolpesM", golpes);
-			misC.addTab("Catas", catas);
-		}if(dance == true && karate == false){
-			misC.addTab("Ballet", ballet);
-			misC.addTab("Jazz", jazz);
-			misC.addTab("HipHop", hip);
-		}if(dance == true && karate == true){
-			misC.addTab("Ballet", ballet);
-			misC.addTab("Jazz", jazz);
-			misC.addTab("HipHop", hip);
-			misC.addTab("Patadas", patadas);
-			misC.addTab("GolpesM", golpes);
-			misC.addTab("Catas", catas);
-		}
-		
-		
-		return misC;
-		
+	public JButton categoria(){
+		JButton cate= new JButton("CATEGORIA 1");
+		cate.setIcon(new ImageIcon("/home/luisa/logo.png"));
+		cate.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				//ProbandoAction button
+				inicio.setVisible(false);
+				registro.setVisible(true);
+			}	
+		});
+		return cate;
 		
 	}
 	public JPanel Olvide(){
@@ -700,6 +716,15 @@ public class DeskApp {
 					inicio.setVisible(true);
 					JOptionPane.showMessageDialog(null, "SUCCES", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
 					users.add(nuevo);
+					
+					textcorreo.setText(null);
+					textname.setText(null);
+					textuser.setText(null);
+					textpasw.setText(null);
+					textpaswVer.setText(null);
+					karateI.setSelected(false);
+					ballet.setSelected(false);
+					
 				}else{
 					reg.setVisible(true);
 					
@@ -711,19 +736,53 @@ public class DeskApp {
 		reg.add(veri);
 		
 		return reg;
+	}public JPanel menuA(){
+		JPanel mA = new JPanel();
+		mA.setBounds(80, 400, 1141, 1100);
+		mA.setBackground(Color.BLACK);
+		mA.setLayout(null);
+		
+		String link = "https://www.twitch.tv/hcikb";
+		JLabel instrucciones = new JLabel("<html>Para poder observar su video en vivo, ingrese al siguiente link: <BR>"+link+"<BR>o ingresa desde su telefono escaneando el siguiente codigo QR:");
+		instrucciones.setBounds(200, 100, 900, 400);
+		instrucciones.setFont(new Font("Dialog", Font.PLAIN, 25));
+		instrucciones.setForeground(Color.WHITE);
+		
+		codigoQR(link);
+		
+		String archiv = System.getProperty("user.home")+"/codidodemo.png";
+		
+		JLabel qrC= new JLabel("");
+		System.out.println(archiv);
+		qrC.setIcon(new ImageIcon(archiv));
+		qrC.setBounds(300, 360,600,600);
+		
+		mA.add(instrucciones);
+		mA.add(qrC);
+		
+		JButton ver = new JButton("Empezar");
+		ver.setBounds(400, 950, 300, 60);
+		ver.setBackground(Color.BLACK);
+		ver.setFont(new Font("Dialog", Font.BOLD, 28));
+		ver.setForeground(Color.GRAY);
+		ver.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				try{
+					
+					Process proc = Runtime.getRuntime().exec("obs");
+				}catch(IOException r){
+					System.out.println("NOOOOOOO");
+				}
+			}
+		});
+		
+		mA.add(ver);
+		
+		return mA;
+		
+		
 	}
-	public JPanel codigoQRVideo(){
-		JPanel mqr = new JPanel();
-		mqr.setBounds(100, 400, 1141, 1100);
-		mqr.setBackground(Color.BLACK);
-		mqr.setLayout(null);
-		
-		
-		JLabel correo = new JLabel("Escanee el siguiente codigo QR: ");
-		correo.setFont(new Font("FreeSerif", Font.BOLD, 31));
-		correo.setForeground(Color.WHITE);
-		correo.setBounds(100, 248, 584, 51);
-		
+	public void codigoQR(String link){
 		int udm = 0;
 		int resol = 78;
 		float mi = 1.000f;
@@ -731,15 +790,9 @@ public class DeskApp {
 		float ms = 1.000f;
 		float min = 1.000f;
 		int rot = 0;
-		float tam = 12.000f;
+		float tam = 18.000f;
 		
 		
-		
-		
-		
-		String link = "soyluna.net/capitulo-13-segunda-temporada/";
-		
-		mqr.add(correo);
 		
 		try{
 			QRCode cod = new QRCode();
@@ -766,12 +819,34 @@ public class DeskApp {
 			System.out.println("NO FUNCIONA BRUTA");
 			
 		}
+	}
+	public JPanel codigoQRVideo(){
+		JPanel mqr = new JPanel();
+		mqr.setBounds(100, 400, 1141, 1100);
+		mqr.setBackground(Color.BLACK);
+		mqr.setLayout(null);
+		
+		
+		String link = "https://www.twitch.tv/hcikb/videos/all";
+		JLabel mens = new JLabel("<html>Para ver los videos disponibles en vivo <BR>Ingrese al siguiente link:<BR>"+link+"<BR> o escanee el siguiente codigo QR: <html>");
+		mens.setFont(new Font("FreeSerif", Font.PLAIN, 28));
+		mens.setForeground(Color.WHITE);
+		mens.setBounds(300, 200, 584, 400);
+		
+		mqr.add(mens);
+		
+		
+		
+		
+		
+		codigoQR(link);
+		
 		String archiv = System.getProperty("user.home")+"/codidodemo.png";
 		
 		JLabel qrC= new JLabel("");
 		System.out.println(archiv);
 		qrC.setIcon(new ImageIcon(archiv));
-		qrC.setBounds(300, 360,600,600);
+		qrC.setBounds(300, 460,600,600);
 		
 		
 		mqr.add(qrC);
@@ -782,30 +857,38 @@ public class DeskApp {
 	}
 	public JPanel menuVivo() throws IOException{
 		JPanel men = new JPanel();
-		men.setBounds(100, 400, 1141, 1100);
+		men.setBounds(100, 500, 1100, 100);
 		men.setBackground(Color.BLACK);
+		men.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		men.setLayout(null);
 		
-		JButton ver = new JButton("VER EN VIVO");
-		ver.setBounds(350, 300, 400, 60);
-		ver.setBackground(Color.BLACK);
-		ver.setForeground(b);
-		ver.setBorder(BorderFactory.createLineBorder(b));
 		
+		
+		
+		JButton ver = new JButton("VER EN VIVO");
+		ver.setBounds(80, 50, 400, 60);
+		ver.setBackground(Color.BLACK);
+		ver.setFont(new Font("Dialog", Font.BOLD, 31));
+		ver.setForeground(b);
+		ver.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				menuAct.setVisible(false);
+				menuVer.setVisible(true);
+			}
+		});
+		//ver.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+	
 		
 		JButton grabar = new JButton("GRABAR EN VIVO");
-		grabar.setBounds(350, 500, 400, 60);
+		grabar.setBounds(630, 50, 400, 60);
 		grabar.setBackground(Color.BLACK);
+		grabar.setFont(new Font("Dialog", Font.BOLD, 31));
 		grabar.setForeground(b);
-		grabar.setBorder(BorderFactory.createLineBorder(b));
+		//grabar.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		grabar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				
-				try{
-					Process proc = Runtime.getRuntime().exec("obs");
-				}catch(IOException r){
-					System.out.println("NOOOOOOO");
-				}
+				menuVer.setVisible(false);
+				menuAct.setVisible(true);
 			}
 		});
 		
@@ -818,4 +901,10 @@ public class DeskApp {
 		
 		return men;
 	}
+	
+	
+	
+
+
 }
+
