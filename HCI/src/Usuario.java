@@ -1,14 +1,17 @@
 import javax.swing.JOptionPane;
 
 
+
+
 public class Usuario {
 	String email;
 	String user;
 	String name;
 	int age;
 	String pasword;
-	boolean karate;
+	boolean karatec;
 	boolean danza;
+	boolean completo=false;
 	
 	boolean verde = false;
 	
@@ -35,10 +38,11 @@ public class Usuario {
 		}
 	}
 	public void setKarate(boolean karateU){
-		this.karate = karateU;
+		this.karatec = karateU;
 	}
 	public void setDanza(boolean danzaU){
-		this.danza = danzaU;	
+		this.danza = danzaU;
+		
 	}
 
 	public String getEmail() {
@@ -58,7 +62,7 @@ public class Usuario {
 		return age;
 	}
 	public boolean isKarate() {
-		return karate;
+		return karatec;
 	}
 	public boolean isDanza() {
 		return danza;
@@ -67,7 +71,12 @@ public class Usuario {
 	public String toString() {
 		return "Usuario [email=" + email + ", user=" + user + ", name=" + name
 				+ ", age=" + age + ", pasword=" + pasword + ", karate="
-				+ karate + ", danza=" + danza + "]";
+				+ karatec + ", danza=" + danza + "]";
+	}
+	public void completo(){
+		if(email.equals(null) || user.equals(null) || name.equals(null) || age == 0 || pasword.equals(null) ){
+			JOptionPane.showMessageDialog(null, "Los campos no pueden quedar incompletos", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 	
 }

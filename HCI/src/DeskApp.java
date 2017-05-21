@@ -80,13 +80,13 @@ public class DeskApp {
 	private JButton vivo;
 	private JLabel label;
 	private JButton atras;
-	private JPanel home;
 	private JPanel inicio;
+	private JPanel categorias;
 	private JPanel clases;
 	private JPanel ver1;
 	private JPanel registro;
 	private boolean karate = true;
-	private boolean dance = false;
+	private boolean dance = true;
 	private JRadioButton karateI;
 	private JRadioButton ballet;
 	private JPanel Nm;
@@ -136,14 +136,26 @@ public class DeskApp {
 		inicio = singIn();
 		inicio.setVisible(true);
 
-		home = home();
+		
+		
+		categorias = new JPanel();
+		categorias.setBounds(0, 500, 1100, 1100);
+		//clases.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+		categorias.setBackground(Color.BLACK);
+		categorias.setLayout(null);
+		for (int i=0;i<categoria(karate,dance).size();i++){
+			categorias.add(categoria(karate,dance).get(i));
+		}
 		
 		clases = new JPanel();
-		clases.setBounds(0, 500, 1500, 1600);
-		clases.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-		clases.setBackground(Color.BLACK);
+		clases.setBounds(0, 500, 1100, 1100);
+		//clases.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+		clases.setBackground(Color.black);
 		clases.setLayout(null);
-		clases.add(categoria());
+		for (int i=0;i<clases().size();i++){
+			clases.add(clases().get(i));
+		}
+		
 		
 		
 		
@@ -158,23 +170,24 @@ public class DeskApp {
 		
 		
 		
-		home.setVisible(false);
+		
 		clases.setVisible(false);
 		ver1.setVisible(false);
 		registro.setVisible(false);
 		Nm.setVisible(false);
 		menuAct.setVisible(false);
 		menuVer.setVisible(false);
+		categorias.setVisible(false);
 		
 		
 		frame.getContentPane().add(inicio);	
-		frame.getContentPane().add(home);
-		frame.getContentPane().add(clases);
 		frame.getContentPane().add(ver1);
 		frame.getContentPane().add(registro);
 		frame.getContentPane().add(Nm);
 		frame.getContentPane().add(menuAct);
 		frame.getContentPane().add(menuVer);
+		frame.getContentPane().add(categorias);
+		frame.getContentPane().add(clases);
 		
 		frame.getContentPane().add(iconos);
 		label = new JLabel("");
@@ -186,14 +199,14 @@ public class DeskApp {
 	}
 	public void menu(){
 		iconos = new JMenuBar();
-		iconos.setBounds(0, 0, 1300, 40);
+		iconos.setBounds(0, 0, 1300, 60);
 		iconos.setBackground(Color.BLACK);
 		
 		
 		
-		JMenuItem back = new JMenuItem("                         Atras",KeyEvent.VK_A);
+		JMenuItem back = new JMenuItem("	Regresar",new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/back.png"));
 		//back.setIcon(new ImageIcon("/home/luisa/Desktop/atras.png"));
-		back.setFont(new Font("Dialog", Font.PLAIN, 22));
+		back.setFont(new Font("Dialog", Font.PLAIN, 27));
 		back.setBackground(Color.BLACK);
 		back.setForeground(Color.WHITE);
 		
@@ -205,21 +218,131 @@ public class DeskApp {
 				if(registro.isVisible()){
 					registro.setVisible(false);
 					inicio.setVisible(true);
-				}if(home.isVisible()){
-					home.setVisible(false);
-					inicio.setVisible(true);
+				
 				}if(clases.isVisible()){
 					clases.setVisible(false);
-					home.setVisible(true);
+					categorias.setVisible(true);
 				}if(ver1.isVisible()){
 					ver1.setVisible(false);
 					inicio.setVisible(true);
 				}if(Nm.isVisible()){
 					Nm.setVisible(false);
-					home.setVisible(true);
+					categorias.setVisible(true);
 				}if(inicio.isVisible()){
 					inicio.setVisible(true);
 				}
+				if(categorias.isVisible()){
+					categorias.setVisible(false);
+					categorias.setVisible(true); 
+				}
+			}	
+		});
+		
+			JMenuItem envivo = new JMenuItem("	En vivo",new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/video.png"));
+			
+			envivo.setFont(new Font("Dialog", Font.PLAIN, 27));
+			envivo.setBounds(0, 0, 300, 60);
+			envivo.setBackground(Color.BLACK);
+			envivo.setForeground(Color.WHITE);
+			envivo.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					if(inicio.isVisible()){
+						inicio.setVisible(true);
+					}if(registro.isVisible()){
+						registro.setVisible(true);
+					}if(clases.isVisible()){
+						clases.setVisible(false);
+						Nm.setVisible(true); 
+					}if(ver1.isVisible()){
+						ver1.setVisible(true); 
+					}if(Nm.isVisible()){
+						Nm.setVisible(false);
+						menuAct.setVisible(false);
+						menuVer.setVisible(false);
+						Nm.setVisible(true); 
+					}if(inicio.isVisible()){
+						inicio.setVisible(true);
+					}if(categorias.isVisible()){
+						categorias.setVisible(false);
+						Nm.setVisible(true); 
+					}
+					
+				}
+			});
+			
+			
+			JMenuItem categorias1 = new JMenuItem("	Categorias");
+			if(dance){
+				categorias1 = new JMenuItem("	Categorias",new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/balerina.png"));
+			}if(karate){
+				categorias1 = new JMenuItem("	Categorias",new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/karateI.png"));
+			}if(karate && dance){
+				categorias1 = new JMenuItem("	Categorias",new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/both.png"));
+				
+			}
+			
+			
+			categorias1.setFont(new Font("Dialog", Font.PLAIN, 27));
+			categorias1.setBackground(Color.BLACK);
+			categorias1.setForeground(Color.WHITE);
+			categorias1.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					if(inicio.isVisible()){
+						inicio.setVisible(true);
+						
+					}if(registro.isVisible()){
+						registro.setVisible(true);
+					}if(clases.isVisible()){
+						clases.setVisible(false);
+						categorias.setVisible(true); 
+					}if(ver1.isVisible()){
+						ver1.setVisible(true); 
+					}if(Nm.isVisible()){
+						Nm.setVisible(false);
+						menuAct.setVisible(false);
+						menuVer.setVisible(false);
+						categorias.setVisible(true); 
+					}if(inicio.isVisible()){
+						inicio.setVisible(true);
+					}if(categorias.isVisible()){
+						categorias.setVisible(true);
+						
+					}if(clases.isVisible()){
+						clases.setVisible(false);
+						categorias.setVisible(true);
+						
+					}
+				}
+			});
+			
+			JMenuItem sesion = new JMenuItem("	Cerrar Sesión",new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/logout.png"));
+			sesion.setFont(new Font("Dialog", Font.PLAIN, 27));
+			sesion.setBackground(Color.BLACK);
+			sesion.setForeground(Color.WHITE);
+			sesion.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					if(registro.isVisible()){
+						registro.setVisible(false);
+						inicio.setVisible(true);  
+					}if(clases.isVisible()){
+						clases.setVisible(false);
+						inicio.setVisible(true); 
+					}if(ver1.isVisible()){
+						ver1.setVisible(false);
+						inicio.setVisible(true); 
+					}if(Nm.isVisible()){
+						Nm.setVisible(false);
+						menuAct.setVisible(false);
+						menuVer.setVisible(false);
+						inicio.setVisible(true); 
+					}if(inicio.isVisible()){
+						inicio.setVisible(true);
+					}if(categorias.isVisible()){
+						categorias.setVisible(false);
+						inicio.setVisible(true); 
+					}
+				}
+			});
 				/*home;
 	private JPanel inicio;
 	private JPanel clases;
@@ -227,84 +350,15 @@ public class DeskApp {
 	private JPanel registro;*/	
 		 
 			
-			}	
-		});
-		JMenuItem home = new JMenuItem("                         Menu",KeyEvent.VK_A);
-		//home.setIcon(new ImageIcon("/home/luisa/Desktop/home.png"));
-		home.setFont(new Font("Dialog", Font.PLAIN, 22));
-		home.setBackground(Color.BLACK);
-		home.setForeground(Color.WHITE);
-		
-		home.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//ProbandoAction button
-				if(registro.isVisible()){
-					registro.setVisible(false);
-					home.setVisible(true); 
-				}if(home.isVisible()){
-					home.setVisible(false);
-					home.setVisible(true); 
-				}if(clases.isVisible()){
-					clases.setVisible(false);
-					home.setVisible(true); 
-				}if(ver1.isVisible()){
-					ver1.setVisible(false);
-					home.setVisible(true); 
-				}if(Nm.isVisible()){
-					Nm.setVisible(false);
-					menuAct.setVisible(false);
-					menuVer.setVisible(false);
-					home.setVisible(true); 
-				}
-				
-				
-			
-			}	
-		});
-		JMenuItem el = new JMenuItem("                         Eliminar",KeyEvent.VK_A);
-		el.setForeground(Color.WHITE);
-		//el.setIcon(new ImageIcon("/home/luisa/Desktop/eliminate.png"));
-		el.setBackground(Color.BLACK);
-		el.setFont(new Font("Dialog", Font.PLAIN, 22));
+		/*
 		
 		JMenu setting = new JMenu("Herramientas");
 		setting.setForeground(Color.WHITE);
 		//setting.setIcon(new ImageIcon("/home/luisa/Desktop/sett.png"));
 		setting.setBackground(Color.BLACK);
-		setting.setFont(new Font("Dialog", Font.PLAIN, 22));
+		setting.setFont(new Font("Dialog", Font.PLAIN, 27));
 		
-		JMenuItem sesion = new JMenuItem("Cerrar Cuenta",KeyEvent.VK_A);
-		//el.setIcon(new ImageIcon("/home/luisa/Desktop/eliminate.png"));
-		sesion.setBackground(Color.BLACK);
-		sesion.setForeground(Color.WHITE);
-		sesion.setFont(new Font("Dialog", Font.PLAIN, 22));
-		sesion.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//ProbandoAction button
-				if(registro.isVisible()){
-					registro.setVisible(false);
-					inicio.setVisible(true); 
-				}if(home.isVisible()){
-					home.setVisible(false);
-					inicio.setVisible(true); 
-				}if(clases.isVisible()){
-					clases.setVisible(false);
-					inicio.setVisible(true); 
-				}if(ver1.isVisible()){
-					ver1.setVisible(false);
-					inicio.setVisible(true); 
-				}if(Nm.isVisible()){
-					Nm.setVisible(false);
-					menuAct.setVisible(false);
-					menuVer.setVisible(false);
-					inicio.setVisible(true); 
-				}if(inicio.isVisible()){
-					inicio.setVisible(true);
-				}
-				 
-			
-			}	
-		});
+		
 		JMenuItem salir = new JMenuItem("Salir",KeyEvent.VK_A);
 		//el.setIcon(new ImageIcon("/home/luisa/Desktop/eliminate.png"));
 		salir.setBackground(Color.BLACK);
@@ -330,69 +384,13 @@ public class DeskApp {
 		setting.add(ayuda);
 		setting.add(sesion);
 		setting.add(salir);
-		
-		iconos.add(setting);
-		iconos.add(home);
+		*/
+		//iconos.add(setting);
+		iconos.add(envivo);
+		iconos.add(categorias1);
 		iconos.add(back);
-		iconos.add(el);
+		iconos.add(sesion);
 		
-		
-	}
-	public JPanel home(){
-		JPanel home = new JPanel();
-		home.setBounds(150, 502, 1000, 1000);
-		home.setBackground(Color.BLACK);
-		home.setLayout(null);
-		home.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-		
-		mclases = new JButton("MIS CLASES");
-		mclases.setFont(new Font("Dialog", Font.BOLD, 29));
-		mclases.setForeground(b);
-		mclases.setBackground(Color.BLACK);
-		mclases.setBounds(350, 230, 300, 70);
-		//mclases.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-		mclases.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//ProbandoAction button
-				home.setVisible(false);
-				clases.setVisible(true);
-			}	
-		});
-		home.add(mclases);
-		
-		importar = new JButton("IMPORTAR");
-		importar.setFont(new Font("Dialog", Font.BOLD, 29));
-		importar.setForeground(Color.GREEN);
-		importar.setBackground(Color.BLACK);
-		importar.setBounds(390, 430, 210, 70);
-		//importar.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-		home.add(importar);
-		
-		vivo = new JButton("EN VIVO");
-		vivo.setFont(new Font("Dialog", Font.BOLD, 29));
-		vivo.setForeground(b);
-		vivo.setBackground(Color.BLACK);
-		//vivo.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-		vivo.setBounds(390, 630, 210, 70);
-		vivo.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//ProbandoAction button
-				home.setVisible(false);
-				Nm.setVisible(true);
-			}	
-		});
-		home.add(vivo);
-		
-		
-		
-		
-		
-	
-		
-		
-	
-		
-		return home;
 		
 	}
 	public JPanel singIn(){
@@ -452,12 +450,12 @@ public class DeskApp {
 		btnIngresar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
-				//if(ver(textField_2.getText(),textField_3.getText())){
+				if(ver(textField_2.getText(),textField_3.getText())){
 					inicio.setVisible(false);
-					home.setVisible(true);
+					categorias.setVisible(true);
 					textField_2.setText(null);
 					textField_3.setText(null);
-				//}
+				}
 			}	
 		});
 		inicio.add(btnIngresar);
@@ -489,22 +487,91 @@ public class DeskApp {
 				res = true;
 			}
 		}
+	
 		System.out.println("RES "+res);
 		return res;
 		
 	}
-	public JButton categoria(){
+	public ArrayList<Component> categoria(Boolean karate, Boolean dance){
+		ArrayList<Component> cat = new ArrayList<Component>();
+		
+		JLabel clase = new JLabel("CATEGORIAS ");
+		clase.setFont(new Font("Dialog", Font.BOLD, 31));
+		clase.setForeground(Color.GREEN);
+		clase.setBounds(400, 0, 384, 51);
+		
+		
+		JLabel categ = new JLabel("Categoria 1");
+		categ.setFont(new Font("Dialog", Font.PLAIN, 28));
+		categ.setForeground(Color.GREEN);
+		categ.setBounds(10, 10, 174, 51);
+		
 		JButton cate= new JButton("CATEGORIA 1");
-		cate.setIcon(new ImageIcon("/home/luisa/logo.png"));
+		if(karate){
+			cate.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/karate.png"));
+		}if(dance){
+			cate.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/ballet.png"));
+		}if(karate && dance){
+			cate.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/karate.png"));
+			JButton catg= new JButton("CATEGORIA 2");
+			catg.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/ballet.png"));
+			catg.setBounds(210, 50,174 ,172);
+			catg.setForeground(Color.black);
+			catg.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					//ProbandoAction button
+					categorias.setVisible(false);
+					clases.setVisible(true);
+				}	
+			});
+			cat.add(catg);
+			JLabel catego = new JLabel("Categoria 2");
+			catego.setFont(new Font("Dialog", Font.PLAIN, 28));
+			catego.setForeground(Color.GREEN);
+			catego.setBackground(Color.BLACK);
+			catego.setBounds(210, 10, 174, 51);
+			cat.add(catego);
+		}
+		cate.setBounds(15, 50,174 ,172);
+		cate.setBackground(Color.BLACK);
 		cate.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
-				inicio.setVisible(false);
-				registro.setVisible(true);
+				categorias.setVisible(false);
+				clases.setVisible(true);
 			}	
 		});
-		return cate;
+		cat.add(clase);
+		cat.add(categ);
+		cat.add(cate);
 		
+		return cat;
+		
+	}
+	public ArrayList<Component> clases(){
+		ArrayList<Component> clases = new ArrayList<Component>();
+		JLabel clase = new JLabel("CLASES ");
+		clase.setFont(new Font("Dialog", Font.BOLD, 31));
+		clase.setForeground(b);
+		clase.setBounds(400, 0, 384, 51);
+		
+		
+		JLabel clase1 = new JLabel("Clase 1 ");
+		clase1.setFont(new Font("Dialog", Font.PLAIN, 28));
+		clase1.setForeground(b);
+		clase1.setBounds(10, 10, 174, 51);
+		
+		JButton c1= new JButton("CLASE 1");
+		c1.setBackground(Color.BLACK);
+		c1.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/icon.png"));
+		c1.setBounds(15, 50,174 ,172);
+		
+		clases.add(clase1);
+		clases.add(clase);
+		clases.add(c1);
+		
+		
+		return clases;
 	}
 	public JPanel Olvide(){
 		JPanel ver = new JPanel();
@@ -684,11 +751,7 @@ public class DeskApp {
 		ballet.setForeground(b);
 		reg.add(ballet);
 		
-		if (karateI.isSelected()){
-			karate = true;
-		}if(ballet.isSelected()){
-			dance = true;
-		}
+		
 		
 		
 		JButton veri = new JButton("REGISTRAR");
@@ -710,10 +773,13 @@ public class DeskApp {
 				
 				users.add(nuevo);
 				System.out.println(users);
+				karate = karateI.isSelected();
+				dance = ballet.isSelected();
+				System.out.println(karate+"-"+dance);
 				//ProbandoAction button
 				if(nuevo.verde){
 					reg.setVisible(false);
-					inicio.setVisible(true);
+					categorias.setVisible(true);
 					JOptionPane.showMessageDialog(null, "SUCCES", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
 					users.add(nuevo);
 					
