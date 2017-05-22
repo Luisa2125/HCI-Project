@@ -73,10 +73,6 @@ public class Usuario {
 				+ ", age=" + age + ", pasword=" + pasword + ", karate="
 				+ karatec + ", danza=" + danza + "]";
 	}
-	public void completo(){
-		if(email.equals(null) || user.equals(null) || name.equals(null) || age == 0 || pasword.equals(null) ){
-			JOptionPane.showMessageDialog(null, "Los campos no pueden quedar incompletos", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
-		}
-	}
+	
 	
 }

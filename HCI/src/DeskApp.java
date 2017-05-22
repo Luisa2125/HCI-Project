@@ -37,6 +37,7 @@ import javax.swing.Icon;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
@@ -63,7 +64,7 @@ import org.opencv.objdetect.CascadeClassifier;
 import com.barcodelib.barcode.QRCode;
 
 
-public class DeskApp {
+public class DeskApp extends JFrame implements ActionListener{
 	
 	
 	
@@ -95,6 +96,7 @@ public class DeskApp {
 	private ArrayList<Usuario> users= new ArrayList<Usuario>();
 	private JMenuBar iconos;
 	Color b = new Color(10,250,255);
+	private JPasswordField pas;
 	
 
 	
@@ -155,7 +157,7 @@ public class DeskApp {
 		for (int i=0;i<clases().size();i++){
 			clases.add(clases().get(i));
 		}
-		
+		clases.setToolTipText("HOLAAAAA");
 		
 		
 		
@@ -418,12 +420,12 @@ public class DeskApp {
 		inicio.add(textField_2);
 		textField_2.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("FreeSerif", Font.BOLD, 31));
-		textField_3.setForeground(Color.BLACK);
-		textField_3.setBounds(559, 348, 300, 51);
-		inicio.add(textField_3);
-		textField_3.setColumns(10);
+		JPasswordField textP= new JPasswordField();
+		textP.setFont(new Font("FreeSerif", Font.BOLD, 31));
+		textP.setForeground(Color.BLACK);
+		textP.setBounds(559, 348, 300, 51);
+		inicio.add(textP);
+		textP.setColumns(10);
 		
 		JButton lblNewLabel2 = new JButton("Olvidé mi Contraseña");
 		lblNewLabel2.setFont(new Font("FreeSerif", Font.BOLD, 25));
@@ -438,34 +440,39 @@ public class DeskApp {
 			}	
 		});
 		
-		inicio.add(lblNewLabel2);
+		inicio.add(textP);
 		
-		btnIngresar = new JButton("INGRESAR");
-		btnIngresar.setFont(new Font("Dialog", Font.BOLD, 25));
+		btnIngresar = new JButton("	INGRESAR");
+		btnIngresar.setFont(new Font("Dialog", Font.BOLD, 28));
 		btnIngresar.setForeground(Color.WHITE);
 		btnIngresar.setBackground(Color.BLACK);
-		btnIngresar.setBounds(168, 680, 200, 50);
-		
+		btnIngresar.setBounds(168, 680, 300, 70);
+		//btnIngresar.setToolTipText("ingresar");
 		btnIngresar.setBorder(BorderFactory.createLineBorder(b));
+		btnIngresar.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/ingresar.png"));
 		btnIngresar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
-				if(ver(textField_2.getText(),textField_3.getText())){
+				System.out.println("1. "+textP.getText());
+				if(ver(textField_2.getText(),textP.getText())){
+					
 					inicio.setVisible(false);
 					categorias.setVisible(true);
 					textField_2.setText(null);
-					textField_3.setText(null);
+					textP.setText(null);
 				}
 			}	
 		});
+		
 		inicio.add(btnIngresar);
 		
 		btnRegistrar = new JButton("REGISTRAR");
-		btnRegistrar.setFont(new Font("Dialog", Font.BOLD, 25));
+		btnRegistrar.setFont(new Font("Dialog", Font.BOLD, 28));
 		btnRegistrar.setForeground(Color.WHITE);
 		btnRegistrar.setBackground(Color.BLACK);
+		btnRegistrar.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/registrar.png"));
 		btnRegistrar.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-		btnRegistrar.setBounds(748, 680, 300, 50);
+		btnRegistrar.setBounds(748, 680, 300, 70);
 		btnRegistrar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
@@ -696,7 +703,7 @@ public class DeskApp {
 		pasw.setBounds(10, 648, 284, 51);
 		reg.add(pasw);
 		
-		JTextField textpasw = new JTextField();
+		JPasswordField textpasw = new JPasswordField();
 		textpasw.setFont(new Font("FreeSerif", Font.BOLD, 31));
 		textpasw.setBounds(300, 648, 350, 51);
 		reg.add(textpasw);
@@ -708,7 +715,7 @@ public class DeskApp {
 		paswVer.setBounds(10, 748, 384, 51);
 		reg.add(paswVer);
 		
-		JTextField textpaswVer = new JTextField();
+		JPasswordField textpaswVer = new JPasswordField();
 		textpaswVer.setFont(new Font("FreeSerif", Font.BOLD, 31));
 		textpaswVer.setBounds(300, 748, 350, 51);
 		reg.add(textpaswVer);
@@ -758,8 +765,9 @@ public class DeskApp {
 		veri.setFont(new Font("Dialog", Font.BOLD, 30));
 		veri.setForeground(Color.WHITE);
 		veri.setBackground(Color.BLACK);
-		veri.setBounds(100, 880, 250, 100);
-		veri.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		veri.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/registrar.png"));
+		veri.setBorder(BorderFactory.createLineBorder(b));
+		veri.setBounds(100, 900, 300, 70);
 		veri.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				Usuario nuevo = new Usuario();
@@ -770,17 +778,18 @@ public class DeskApp {
 				//nuevo.setAge(Integer.valueOf(textage.getText()));
 				nuevo.setKarate(karateI.isSelected());
 				nuevo.setDanza(ballet.isSelected());
-				
+				//nuevo.completo();
 				users.add(nuevo);
 				System.out.println(users);
 				karate = karateI.isSelected();
 				dance = ballet.isSelected();
-				System.out.println(karate+"-"+dance);
+				System.out.println(nuevo.completo+"-"+nuevo.completo);
 				//ProbandoAction button
 				if(nuevo.verde){
 					reg.setVisible(false);
 					categorias.setVisible(true);
-					JOptionPane.showMessageDialog(null, "SUCCES", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
+					//JOptionPane.showMessageDialog(null, "SUCCES", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
+					//JOptionPane.showMessageDialog(categorias,"SUCCES", "REGISTRO", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/registrar.png"));
 					users.add(nuevo);
 					
 					textcorreo.setText(null);
@@ -966,6 +975,12 @@ public class DeskApp {
 		
 		
 		return men;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
