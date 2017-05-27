@@ -61,6 +61,8 @@ import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;
 import org.opencv.objdetect.CascadeClassifier;
 
+
+
 import com.barcodelib.barcode.QRCode;
 
 
@@ -70,6 +72,7 @@ public class DeskApp extends JFrame implements ActionListener{
 	
 	
 	private JFrame frame;
+	private JFrame pop;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -96,6 +99,13 @@ public class DeskApp extends JFrame implements ActionListener{
 	private ArrayList<Usuario> users= new ArrayList<Usuario>();
 	private JMenuBar iconos;
 	Color b = new Color(10,250,255);
+	Color fondo = new Color(115,198,182);
+	Color oscuro = new Color(19,141,117);
+	Color fondo1 = new Color(127, 179, 213 );
+	Color oscuro1 = new Color(41, 128, 185);
+	Color popC = new Color(169, 204, 227);
+	int i = 0;
+	
 	private JPasswordField pas;
 	
 
@@ -132,18 +142,21 @@ public class DeskApp extends JFrame implements ActionListener{
 	 */
 	private void initialize() throws IOException {
 		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.BLACK);
+		frame.getContentPane().setBackground(fondo);
 		frame.getContentPane().setLayout(null);
+		pop();
 		menu();
 		inicio = singIn();
 		inicio.setVisible(true);
+		
+		
 
 		
 		
 		categorias = new JPanel();
 		categorias.setBounds(0, 500, 1100, 1100);
 		//clases.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-		categorias.setBackground(Color.BLACK);
+		categorias.setBackground(fondo1);
 		categorias.setLayout(null);
 		for (int i=0;i<categoria(karate,dance).size();i++){
 			categorias.add(categoria(karate,dance).get(i));
@@ -152,7 +165,7 @@ public class DeskApp extends JFrame implements ActionListener{
 		clases = new JPanel();
 		clases.setBounds(0, 500, 1100, 1100);
 		//clases.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-		clases.setBackground(Color.black);
+		clases.setBackground(fondo1);
 		clases.setLayout(null);
 		for (int i=0;i<clases().size();i++){
 			clases.add(clases().get(i));
@@ -199,6 +212,104 @@ public class DeskApp extends JFrame implements ActionListener{
 		frame.setBounds(100, 100, 1300, 1550);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	public void pop(){
+		pop = new JFrame();
+		pop.setBounds(100, 100, 1300, 1000);
+		pop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pop.getContentPane().setLayout(null);
+		pop.getContentPane().setBackground(popC);
+		
+		ArrayList<Component> imgs = new ArrayList<Component>();
+		
+		JButton btnSaltarInfo = new JButton("SALTAR INFO");
+		btnSaltarInfo.setFont(new Font("Dialog", Font.BOLD, 28));
+		btnSaltarInfo.setForeground(Color.WHITE);
+		btnSaltarInfo.setBackground(oscuro1);
+		btnSaltarInfo.setBounds(736, 900, 310, 60);
+		btnSaltarInfo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				try{
+					
+					Process proc = Runtime.getRuntime().exec("obs");
+					pop.setVisible(false);
+				}catch(IOException r){
+					System.out.println("NOOOOOOO");
+				}
+				
+			}
+		});
+		pop.getContentPane().add(btnSaltarInfo);
+		
+		JLabel img = new JLabel("");
+		img.setBounds(60, 60, 1190, 800);
+		img.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/l1.png"));
+		img.setBorder(BorderFactory.createLineBorder(oscuro1));
+		pop.getContentPane().add(img);
+		
+		JLabel img1 = new JLabel("");
+		img1.setBounds(60, 60, 1190, 800);
+		img1.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/l2.png"));
+		img1.setBorder(BorderFactory.createLineBorder(oscuro));
+		pop.getContentPane().add(img1);
+		JLabel img2 = new JLabel("");
+		img2.setBounds(60, 60, 1190, 800);
+		img2.setBorder(BorderFactory.createLineBorder(oscuro));
+		img2.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/l3.png"));
+		pop.getContentPane().add(img2);
+		JLabel img3 = new JLabel("");
+		img3.setBounds(60, 60, 1190, 800);
+		img3.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/l4.png"));
+		img3.setBorder(BorderFactory.createLineBorder(oscuro));
+		pop.getContentPane().add(img3);
+		
+		img.setVisible(false);
+		img2.setVisible(false);
+		img3.setVisible(false);
+		img1.setVisible(true);
+		imgs.add(img1);
+		imgs.add(img);
+		imgs.add(img3);
+		imgs.add(img2);
+		
+		JButton btnAnterior = new JButton("ANTERIOR");
+		btnAnterior.setFont(new Font("Dialog", Font.BOLD, 28));
+		btnAnterior.setForeground(Color.WHITE);
+		btnAnterior.setBackground(oscuro1);
+		btnAnterior.setBounds(127, 900, 200, 60);
+		btnAnterior.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(0<i && i<=3){
+					i -=1;
+				}else{
+					i = 0;
+				}
+				imgs.get(i+1).setVisible(false);
+				imgs.get(i).setVisible(true);
+			}
+		});
+		pop.getContentPane().add(btnAnterior);
+		
+		JButton btnSiguiente = new JButton("SIGUIENTE");
+		btnSiguiente.setFont(new Font("Dialog", Font.BOLD, 28));
+		btnSiguiente.setForeground(Color.WHITE);
+		btnSiguiente.setBackground(oscuro1);
+		btnSiguiente.setBounds(360, 900, 200, 60);
+		btnSiguiente.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(0<=i && i<3){
+					i +=1;
+				}else{
+					i = 0;
+				}
+				imgs.get(i-1).setVisible(false);
+				imgs.get(i).setVisible(true);
+				
+			}
+		});
+		pop.getContentPane().add(btnSiguiente);
+		
+		
+	}
 	public void menu(){
 		iconos = new JMenuBar();
 		iconos.setBounds(0, 0, 1300, 60);
@@ -236,6 +347,7 @@ public class DeskApp extends JFrame implements ActionListener{
 				if(categorias.isVisible()){
 					categorias.setVisible(false);
 					categorias.setVisible(true); 
+					frame.setBackground(fondo1);
 				}
 			}	
 		});
@@ -268,6 +380,7 @@ public class DeskApp extends JFrame implements ActionListener{
 						categorias.setVisible(false);
 						Nm.setVisible(true); 
 					}
+					
 					
 				}
 			});
@@ -343,6 +456,9 @@ public class DeskApp extends JFrame implements ActionListener{
 						categorias.setVisible(false);
 						inicio.setVisible(true); 
 					}
+					
+					categorias.setBackground(fondo);
+					frame.getContentPane().setBackground(fondo);
 				}
 			});
 				/*home;
@@ -357,13 +473,13 @@ public class DeskApp extends JFrame implements ActionListener{
 		JMenu setting = new JMenu("Herramientas");
 		setting.setForeground(Color.WHITE);
 		//setting.setIcon(new ImageIcon("/home/luisa/Desktop/sett.png"));
-		setting.setBackground(Color.BLACK);
+		setting.setBackground(Color.GRAY);
 		setting.setFont(new Font("Dialog", Font.PLAIN, 27));
 		
 		
 		JMenuItem salir = new JMenuItem("Salir",KeyEvent.VK_A);
 		//el.setIcon(new ImageIcon("/home/luisa/Desktop/eliminate.png"));
-		salir.setBackground(Color.BLACK);
+		salir.setBackground(Color.GRAY);
 		salir.setForeground(Color.WHITE);
 		salir.setFont(new Font("Dialog", Font.PLAIN, 22));
 		salir.addActionListener(new ActionListener(){
@@ -374,7 +490,7 @@ public class DeskApp extends JFrame implements ActionListener{
 		});
 		JMenuItem ayuda = new JMenuItem("Ayuda",KeyEvent.VK_A);
 		//el.setIcon(new ImageIcon("/home/luisa/Desktop/eliminate.png"));
-		ayuda.setBackground(Color.BLACK);
+		ayuda.setBackground(Color.GRAY);
 		ayuda.setForeground(Color.WHITE);
 		ayuda.setFont(new Font("Dialog", Font.PLAIN, 22));
 		ayuda.addActionListener(new ActionListener(){
@@ -398,40 +514,41 @@ public class DeskApp extends JFrame implements ActionListener{
 	public JPanel singIn(){
 		JPanel inicio = new JPanel();
 		inicio.setBounds(100, 400, 1141, 1100);
-		inicio.setBackground(Color.BLACK);
+		
+		inicio.setBackground(fondo);
 		inicio.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("USUARIO: ");
 		lblNewLabel.setFont(new Font("FreeSerif", Font.BOLD, 31));
 		lblNewLabel.setBounds(285, 248, 284, 51);
-		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setForeground(Color.BLACK);
 		inicio.add(lblNewLabel);
 		
 		JLabel lblNewLabel1 = new JLabel("CONTRASEÑA: ");
 		lblNewLabel1.setFont(new Font("FreeSerif", Font.BOLD, 31));
-		lblNewLabel1.setForeground(Color.WHITE);
+		lblNewLabel1.setForeground(Color.BLACK);
 		lblNewLabel1.setBounds(285, 348, 284, 51);
 		inicio.add(lblNewLabel1);
 		
 		textField_2 = new JTextField();
 		textField_2.setFont(new Font("FreeSerif", Font.BOLD, 31));
-		textField_2.setForeground(Color.BLACK);
+		textField_2.setForeground(Color.GRAY);
 		textField_2.setBounds(489, 248, 350, 51);
 		inicio.add(textField_2);
 		textField_2.setColumns(10);
 		
 		JPasswordField textP= new JPasswordField();
 		textP.setFont(new Font("FreeSerif", Font.BOLD, 31));
-		textP.setForeground(Color.BLACK);
+		textP.setForeground(Color.GRAY);
 		textP.setBounds(559, 348, 300, 51);
 		inicio.add(textP);
 		textP.setColumns(10);
 		
 		JButton lblNewLabel2 = new JButton("Olvidé mi Contraseña");
-		lblNewLabel2.setFont(new Font("FreeSerif", Font.BOLD, 25));
+		lblNewLabel2.setFont(new Font("FreeSerif", Font.BOLD, 28));
 		lblNewLabel2.setForeground(Color.WHITE);
-		lblNewLabel2.setBackground(Color.BLACK);
-		lblNewLabel2.setBounds(700, 399, 300, 45);
+		lblNewLabel2.setBackground(fondo);
+		lblNewLabel2.setBounds(700, 400, 400, 45);
 		lblNewLabel2.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
@@ -439,13 +556,13 @@ public class DeskApp extends JFrame implements ActionListener{
 				ver1.setVisible(true);
 			}	
 		});
-		
+		inicio.add(lblNewLabel2);
 		inicio.add(textP);
 		
-		btnIngresar = new JButton("	INGRESAR");
+		btnIngresar = new JButton("    INGRESAR");
 		btnIngresar.setFont(new Font("Dialog", Font.BOLD, 28));
 		btnIngresar.setForeground(Color.WHITE);
-		btnIngresar.setBackground(Color.BLACK);
+		btnIngresar.setBackground(oscuro);
 		btnIngresar.setBounds(168, 680, 300, 70);
 		//btnIngresar.setToolTipText("ingresar");
 		btnIngresar.setBorder(BorderFactory.createLineBorder(b));
@@ -458,6 +575,7 @@ public class DeskApp extends JFrame implements ActionListener{
 					
 					inicio.setVisible(false);
 					categorias.setVisible(true);
+					frame.getContentPane().setBackground(fondo1);
 					textField_2.setText(null);
 					textP.setText(null);
 				}
@@ -469,7 +587,7 @@ public class DeskApp extends JFrame implements ActionListener{
 		btnRegistrar = new JButton("REGISTRAR");
 		btnRegistrar.setFont(new Font("Dialog", Font.BOLD, 28));
 		btnRegistrar.setForeground(Color.WHITE);
-		btnRegistrar.setBackground(Color.BLACK);
+		btnRegistrar.setBackground(oscuro);
 		btnRegistrar.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/registrar.png"));
 		btnRegistrar.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		btnRegistrar.setBounds(748, 680, 300, 70);
@@ -504,13 +622,13 @@ public class DeskApp extends JFrame implements ActionListener{
 		
 		JLabel clase = new JLabel("CATEGORIAS ");
 		clase.setFont(new Font("Dialog", Font.BOLD, 31));
-		clase.setForeground(Color.GREEN);
+		clase.setForeground(Color.BLACK);
 		clase.setBounds(400, 0, 384, 51);
 		
 		
 		JLabel categ = new JLabel("Categoria 1");
 		categ.setFont(new Font("Dialog", Font.PLAIN, 28));
-		categ.setForeground(Color.GREEN);
+		categ.setForeground(Color.BLACK);
 		categ.setBounds(10, 10, 174, 51);
 		
 		JButton cate= new JButton("CATEGORIA 1");
@@ -523,7 +641,8 @@ public class DeskApp extends JFrame implements ActionListener{
 			JButton catg= new JButton("CATEGORIA 2");
 			catg.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/ballet.png"));
 			catg.setBounds(210, 50,174 ,172);
-			catg.setForeground(Color.black);
+			catg.setForeground(Color.BLACK);
+			catg.setBackground(fondo1);
 			catg.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					//ProbandoAction button
@@ -534,13 +653,13 @@ public class DeskApp extends JFrame implements ActionListener{
 			cat.add(catg);
 			JLabel catego = new JLabel("Categoria 2");
 			catego.setFont(new Font("Dialog", Font.PLAIN, 28));
-			catego.setForeground(Color.GREEN);
-			catego.setBackground(Color.BLACK);
+			catego.setForeground(Color.BLACK);
+			catego.setBackground(fondo1);
 			catego.setBounds(210, 10, 174, 51);
 			cat.add(catego);
 		}
 		cate.setBounds(15, 50,174 ,172);
-		cate.setBackground(Color.BLACK);
+		cate.setBackground(fondo1);
 		cate.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//ProbandoAction button
@@ -559,17 +678,18 @@ public class DeskApp extends JFrame implements ActionListener{
 		ArrayList<Component> clases = new ArrayList<Component>();
 		JLabel clase = new JLabel("CLASES ");
 		clase.setFont(new Font("Dialog", Font.BOLD, 31));
-		clase.setForeground(b);
+		clase.setForeground(Color.black);
+		clase.setBackground(fondo1);
 		clase.setBounds(400, 0, 384, 51);
 		
 		
 		JLabel clase1 = new JLabel("Clase 1 ");
 		clase1.setFont(new Font("Dialog", Font.PLAIN, 28));
-		clase1.setForeground(b);
+		clase1.setForeground(oscuro1);
 		clase1.setBounds(10, 10, 174, 51);
 		
 		JButton c1= new JButton("CLASE 1");
-		c1.setBackground(Color.BLACK);
+		c1.setBackground(fondo1);
 		c1.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/icon.png"));
 		c1.setBounds(15, 50,174 ,172);
 		
@@ -583,7 +703,7 @@ public class DeskApp extends JFrame implements ActionListener{
 	public JPanel Olvide(){
 		JPanel ver = new JPanel();
 		ver.setBounds(100, 400, 1141, 1100);
-		ver.setBackground(Color.BLACK);
+		ver.setBackground(fondo);
 		ver.setLayout(null);
 		
 		JLabel correo = new JLabel("INGRESE CORREO: ");
@@ -612,7 +732,7 @@ public class DeskApp extends JFrame implements ActionListener{
 		JButton veri = new JButton("VERIFICAR");
 		veri.setFont(new Font("Dialog", Font.BOLD, 30));
 		veri.setForeground(Color.WHITE);
-		veri.setBackground(Color.BLACK);
+		veri.setBackground(oscuro);
 		veri.setBounds(668, 680, 250, 100);
 		veri.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -648,12 +768,12 @@ public class DeskApp extends JFrame implements ActionListener{
 	public JPanel registro(){
 		JPanel reg = new JPanel();
 		reg.setBounds(104, 402, 1141, 1100);
-		reg.setBackground(Color.BLACK);
+		reg.setBackground(fondo);
 		reg.setLayout(null);
 		
 		JLabel correo = new JLabel("CORREO: ");
-		correo.setFont(new Font("FreeSerif", Font.PLAIN, 25));
-		correo.setForeground(Color.WHITE);
+		correo.setFont(new Font("FreeSerif", Font.PLAIN, 31));
+		correo.setForeground(Color.BLACK);
 		correo.setBounds(10, 248, 284, 51);
 		reg.add(correo);
 		
@@ -664,8 +784,8 @@ public class DeskApp extends JFrame implements ActionListener{
 		
 		
 		JLabel user = new JLabel("USUARIO: ");
-		user.setFont(new Font("FreeSerif", Font.PLAIN, 25));
-		user.setForeground(Color.WHITE);
+		user.setFont(new Font("FreeSerif", Font.PLAIN,31));
+		user.setForeground(Color.BLACK);
 		user.setBounds(10, 348, 284, 51);
 		reg.add(user);
 		
@@ -675,8 +795,8 @@ public class DeskApp extends JFrame implements ActionListener{
 		reg.add(textuser);
 		
 		JLabel name = new JLabel("NOMBRE: ");
-		name.setFont(new Font("FreeSerif", Font.PLAIN, 25));
-		name.setForeground(Color.WHITE);
+		name.setFont(new Font("FreeSerif", Font.PLAIN, 31));
+		name.setForeground(Color.BLACK);
 		name.setBounds(10, 448, 284, 51);
 		reg.add(name);
 		
@@ -687,19 +807,19 @@ public class DeskApp extends JFrame implements ActionListener{
 		
 		
 		JLabel age = new JLabel("EDAD: ");
-		age.setFont(new Font("FreeSerif", Font.PLAIN, 25));
-		age.setForeground(Color.WHITE);
+		age.setFont(new Font("FreeSerif", Font.PLAIN, 31));
+		age.setForeground(Color.BLACK);
 		age.setBounds(10, 548, 284, 51);
 		reg.add(age);
 		
 		JTextField textage = new JTextField();
 		textage.setFont(new Font("FreeSerif", Font.BOLD, 31));
-		textage.setBounds(300, 548, 350, 51);
+		textage.setBounds(300, 548, 80, 51);
 		reg.add(textage);
 		
 		JLabel pasw = new JLabel("CONTRASEÑA: ");
-		pasw.setFont(new Font("FreeSerif", Font.PLAIN, 25));
-		pasw.setForeground(Color.WHITE);
+		pasw.setFont(new Font("FreeSerif", Font.PLAIN, 31));
+		pasw.setForeground(Color.BLACK);
 		pasw.setBounds(10, 648, 284, 51);
 		reg.add(pasw);
 		
@@ -710,32 +830,32 @@ public class DeskApp extends JFrame implements ActionListener{
 		
 		
 		JLabel paswVer = new JLabel("REPITA CONTRASEÑA: ");
-		paswVer.setFont(new Font("FreeSerif", Font.PLAIN, 25));
-		paswVer.setForeground(Color.WHITE);
+		paswVer.setFont(new Font("FreeSerif", Font.PLAIN, 31));
+		paswVer.setForeground(Color.BLACK);
 		paswVer.setBounds(10, 748, 384, 51);
 		reg.add(paswVer);
 		
 		JPasswordField textpaswVer = new JPasswordField();
 		textpaswVer.setFont(new Font("FreeSerif", Font.BOLD, 31));
-		textpaswVer.setBounds(300, 748, 350, 51);
+		textpaswVer.setBounds(300, 818, 350, 51);
 		reg.add(textpaswVer);
 		
 		JLabel gen = new JLabel("Genero: ");
-		gen.setFont(new Font("FreeSerif", Font.PLAIN, 27));
-		gen.setForeground(Color.WHITE);
+		gen.setFont(new Font("FreeSerif", Font.PLAIN, 35));
+		gen.setForeground(new Color(14, 102, 85));
 		gen.setBounds(760, 362, 384, 51);
 		reg.add(gen);
 		JRadioButton fem = new JRadioButton("Femenino");
-		fem.setBounds(760, 402, 149, 23);
-		fem.setFont(new Font("Dialog", Font.PLAIN,22));
-		fem.setBackground(Color.BLACK);
-		fem.setForeground(Color.GREEN);
+		fem.setBounds(760, 402, 170, 23);
+		fem.setFont(new Font("Dialog", Font.PLAIN,28));
+		fem.setBackground(fondo);
+		fem.setForeground(Color.black);
 		reg.add(fem);
 		JRadioButton mas = new JRadioButton("Masculino");
-		mas.setBounds(760, 442, 149, 23);
-		mas.setFont(new Font("Dialog", Font.PLAIN,22));
-		mas.setBackground(Color.BLACK);
-		mas.setForeground(Color.GREEN);
+		mas.setBounds(760, 442, 170, 23);
+		mas.setFont(new Font("Dialog", Font.PLAIN,28));
+		mas.setBackground(fondo);
+		mas.setForeground(Color.BLACK);
 		reg.add(mas);
 		if (mas.isSelected()){
 			fem.setSelected(false);
@@ -747,24 +867,25 @@ public class DeskApp extends JFrame implements ActionListener{
 		
 		karateI = new JRadioButton("Karate");
 		karateI.setBounds(760, 662, 149, 23);
-		karateI.setFont(new Font("Dialog", Font.PLAIN,22));
-		karateI.setBackground(Color.BLACK);
-		karateI.setForeground(b);
+		karateI.setFont(new Font("Dialog", Font.PLAIN,28));
+		karateI.setBackground(fondo);
+		karateI.setForeground(Color.black);
 		reg.add(karateI);
 		ballet = new JRadioButton("danza");
 		ballet.setBounds(760, 702, 149, 23);
-		ballet.setFont(new Font("Dialog", Font.PLAIN,22));
-		ballet.setBackground(Color.BLACK);
-		ballet.setForeground(b);
+		ballet.setFont(new Font("Dialog", Font.PLAIN,28));
+		ballet.setBackground(fondo);
+		ballet.setForeground(Color.black);
 		reg.add(ballet);
 		
 		
 		
 		
-		JButton veri = new JButton("REGISTRAR");
+		JButton veri = new JButton("    REGISTRAR");
 		veri.setFont(new Font("Dialog", Font.BOLD, 30));
 		veri.setForeground(Color.WHITE);
-		veri.setBackground(Color.BLACK);
+		
+		veri.setBackground(oscuro);
 		veri.setIcon(new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/registrar.png"));
 		veri.setBorder(BorderFactory.createLineBorder(b));
 		veri.setBounds(100, 900, 300, 70);
@@ -788,6 +909,7 @@ public class DeskApp extends JFrame implements ActionListener{
 				if(nuevo.verde){
 					reg.setVisible(false);
 					categorias.setVisible(true);
+					frame.getContentPane().setBackground(fondo1);
 					//JOptionPane.showMessageDialog(null, "SUCCES", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
 					//JOptionPane.showMessageDialog(categorias,"SUCCES", "REGISTRO", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("/home/luisa/Desktop/UVG/HCI/proyecto/registrar.png"));
 					users.add(nuevo);
@@ -813,14 +935,15 @@ public class DeskApp extends JFrame implements ActionListener{
 		return reg;
 	}public JPanel menuA(){
 		JPanel mA = new JPanel();
-		mA.setBounds(80, 400, 1141, 1100);
-		mA.setBackground(Color.BLACK);
+		mA.setBounds(80, 500, 1141, 1100);
+		mA.setBackground(fondo1);
+		
 		mA.setLayout(null);
 		
 		String link = "https://www.twitch.tv/hcikb";
 		JLabel instrucciones = new JLabel("<html>Para poder observar su video en vivo, ingrese al siguiente link: <BR>"+link+"<BR>o ingresa desde su telefono escaneando el siguiente codigo QR:");
 		instrucciones.setBounds(200, 100, 900, 400);
-		instrucciones.setFont(new Font("Dialog", Font.PLAIN, 25));
+		instrucciones.setFont(new Font("Dialog", Font.PLAIN, 32));
 		instrucciones.setForeground(Color.WHITE);
 		
 		codigoQR(link);
@@ -837,17 +960,14 @@ public class DeskApp extends JFrame implements ActionListener{
 		
 		JButton ver = new JButton("Empezar");
 		ver.setBounds(400, 950, 300, 60);
-		ver.setBackground(Color.BLACK);
+		ver.setBackground(oscuro1);
 		ver.setFont(new Font("Dialog", Font.BOLD, 28));
-		ver.setForeground(Color.GRAY);
+		ver.setForeground(Color.WHITE);
 		ver.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				try{
-					
-					Process proc = Runtime.getRuntime().exec("obs");
-				}catch(IOException r){
-					System.out.println("NOOOOOOO");
-				}
+			
+					pop.setVisible(true);
+				
 			}
 		});
 		
@@ -898,15 +1018,15 @@ public class DeskApp extends JFrame implements ActionListener{
 	public JPanel codigoQRVideo(){
 		JPanel mqr = new JPanel();
 		mqr.setBounds(100, 400, 1141, 1100);
-		mqr.setBackground(Color.BLACK);
+		mqr.setBackground(fondo1);
 		mqr.setLayout(null);
 		
 		
 		String link = "https://www.twitch.tv/hcikb/videos/all";
 		JLabel mens = new JLabel("<html>Para ver los videos disponibles en vivo <BR>Ingrese al siguiente link:<BR>"+link+"<BR> o escanee el siguiente codigo QR: <html>");
-		mens.setFont(new Font("FreeSerif", Font.PLAIN, 28));
+		mens.setFont(new Font("Dialog", Font.PLAIN, 32));
 		mens.setForeground(Color.WHITE);
-		mens.setBounds(300, 200, 584, 400);
+		mens.setBounds(300, 200, 600, 400);
 		
 		mqr.add(mens);
 		
@@ -933,7 +1053,7 @@ public class DeskApp extends JFrame implements ActionListener{
 	public JPanel menuVivo() throws IOException{
 		JPanel men = new JPanel();
 		men.setBounds(100, 500, 1100, 100);
-		men.setBackground(Color.BLACK);
+		men.setBackground(fondo1);
 		men.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		men.setLayout(null);
 		
@@ -942,9 +1062,9 @@ public class DeskApp extends JFrame implements ActionListener{
 		
 		JButton ver = new JButton("VER EN VIVO");
 		ver.setBounds(80, 50, 400, 60);
-		ver.setBackground(Color.BLACK);
+		ver.setBackground(oscuro1);
 		ver.setFont(new Font("Dialog", Font.BOLD, 31));
-		ver.setForeground(b);
+		ver.setForeground(Color.black);
 		ver.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				menuAct.setVisible(false);
@@ -956,9 +1076,9 @@ public class DeskApp extends JFrame implements ActionListener{
 		
 		JButton grabar = new JButton("GRABAR EN VIVO");
 		grabar.setBounds(630, 50, 400, 60);
-		grabar.setBackground(Color.BLACK);
+		grabar.setBackground(oscuro1);
 		grabar.setFont(new Font("Dialog", Font.BOLD, 31));
-		grabar.setForeground(b);
+		grabar.setForeground(Color.black);
 		//grabar.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		grabar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
